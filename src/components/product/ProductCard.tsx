@@ -5,6 +5,8 @@ import { useCart } from '../../context/CartContext';
 import { useVendor } from '../../context/VendorContext';
 import type { Product } from '../../data/types';
 import { cctToCss } from '../../lib/color';
+import { finishSwatch } from '../../lib/finish';
+import { productHref } from '../../lib/selection';
 import { efficacy, money, num, pct } from '../../lib/format';
 import { margin, scopeLabel, scopeLocationIds, stockIn, stockLevel } from '../../lib/inventory';
 import { Badge } from '../ui/Badge';
@@ -15,7 +17,9 @@ import styles from './ProductCard.module.css';
 
 export function ProductCard({ product: p, index = 0 }: { product: Product; index?: number }) {
   const [cct, setCct] = useState(p.cctOptions[0]);
+  const [finish, setFinish] = useState(p.finishes[0]);
   const [hover, setHover] = useState(false);
+  const href = productHref(p, { cct, finish });
   const ref = useRef<HTMLElement>(null);
   const { enabled: vendor, scope } = useVendor();
   const { add } = useCart();
@@ -41,9 +45,9 @@ export function ProductCard({ product: p, index = 0 }: { product: Product; index
       onPointerLeave={() => setHover(false)}
     >
       <div className={styles.mediaWrap}>
-        <Link to={`/product/${p.id}`} className={styles.media} aria-label={p.name}>
+        <Link to={href} className={styles.media} aria-label={p.name}>
           <div className={styles.art}>
-            <FixtureArt kind={p.fixture} cct={cct} finish={p.finishes[0]} intensity={hover ? 1.15 : 0.9} />
+            <FixtureArt kind={p.fixture} cct={cct} finish={finish} intensity={hover ? 1.15 : 0.9} />
           </div>
           <div className={styles.badges}>
             <TagBadges tags={p.tags} />
@@ -66,11 +70,30 @@ export function ProductCard({ product: p, index = 0 }: { product: Product; index
           ))}
         </div>
 
+        {p.finishes.length > 1 && (
+          <div className={styles.finishes} role="radiogroup" aria-label="Finish">
+            {p.finishes.map((f) => (
+              <button
+                key={f}
+                type="button"
+                role="radio"
+                aria-checked={f === finish}
+                aria-label={f}
+                title={f}
+                className={styles.finish}
+                style={{ background: finishSwatch(f) }}
+                onPointerEnter={() => setFinish(f)}
+                onClick={() => setFinish(f)}
+              />
+            ))}
+          </div>
+        )}
+
         <button
           type="button"
           className={styles.quickAdd}
           aria-label={`Add ${p.name} to cart`}
-          onClick={() => add(p, { cct, finish: p.finishes[0] })}
+          onClick={() => add(p, { cct, finish })}
           disabled={vendor && qty === 0}
         >
           <Plus size={18} />
@@ -89,7 +112,7 @@ export function ProductCard({ product: p, index = 0 }: { product: Product; index
           )}
         </div>
 
-        <Link to={`/product/${p.id}`} className={styles.name}>
+        <Link to={href} className={styles.name}>
           {p.name}
         </Link>
 

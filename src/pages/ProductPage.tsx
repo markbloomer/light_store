@@ -1,6 +1,18 @@
-import { BadgeCheck, Download, Lightbulb, LightbulbOff, Minus, Plus, ShieldCheck, Star, Zap } from 'lucide-react';
+import {
+  BadgeCheck,
+  Download,
+  Lightbulb,
+  LightbulbOff,
+  Minus,
+  MousePointerClick,
+  Plus,
+  ShieldCheck,
+  Star,
+  Zap,
+} from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { ArtControls } from '../components/product/ArtControls';
 import { ProductCard } from '../components/product/ProductCard';
 import { FixtureArt } from '../components/product/FixtureArt';
 import { StockByLocation } from '../components/product/StockByLocation';
@@ -15,6 +27,7 @@ import { cctLabel, cctToCss } from '../lib/color';
 import { finishSwatch } from '../lib/finish';
 import { efficacy, money, num, pct } from '../lib/format';
 import { margin, scopeLabel, stockIn, stockLevel, totalStock } from '../lib/inventory';
+import { cycle, readSelection, writeSelection, type Selection } from '../lib/selection';
 import styles from './ProductPage.module.css';
 
 export function ProductPage() {
@@ -23,16 +36,15 @@ export function ProductPage() {
   const { enabled: vendor, scope } = useVendor();
   const { add } = useCart();
 
-  const [cct, setCct] = useState(p?.cctOptions[0] ?? 3000);
-  const [finish, setFinish] = useState(p?.finishes[0] ?? '');
+  const [sp, setSp] = useSearchParams();
   const [qty, setQty] = useState(1);
   const [lit, setLit] = useState(true);
+  const [touched, setTouched] = useState(false);
 
   useEffect(() => {
     if (!p) return;
-    setCct(p.cctOptions[0]);
-    setFinish(p.finishes[0]);
     setQty(1);
+    setTouched(false);
     window.scrollTo({ top: 0 });
   }, [p]);
 
@@ -46,6 +58,22 @@ export function ProductPage() {
       </div>
     );
   }
+
+  const { cct, finish } = readSelection(p, sp);
+  const choose = (next: Partial<Selection>) =>
+    setSp((prev) => writeSelection(p, { cct, finish, ...next }, prev), { replace: true });
+
+  const canCycleCct = p.cctOptions.length > 1;
+  const canCycleFinish = p.finishes.length > 1;
+  const onLightClick = () => {
+    setTouched(true);
+    if (!lit) setLit(true);
+    else if (canCycleCct) choose({ cct: cycle(p.cctOptions, cct) });
+  };
+  const onBodyClick = () => {
+    setTouched(true);
+    choose({ finish: cycle(p.finishes, finish) });
+  };
 
   const cat = CATEGORY_BY_ID[p.category];
   const scopedQty = stockIn(p, scope);
@@ -82,7 +110,14 @@ export function ProductPage() {
         >
           <div className={styles.stageGlow} />
           <div className={styles.stageArt}>
-            <FixtureArt kind={p.fixture} cct={cct} finish={finish} intensity={lit ? 1.25 : 0} />
+            <FixtureArt
+              kind={p.fixture}
+              cct={cct}
+              finish={finish}
+              intensity={lit ? 1.25 : 0}
+              onLightClick={canCycleCct || !lit ? onLightClick : undefined}
+              onBodyClick={canCycleFinish ? onBodyClick : undefined}
+            />
           </div>
           <div className={styles.stageBadges}>
             <TagBadges tags={p.tags} max={3} />
@@ -91,10 +126,29 @@ export function ProductPage() {
             {lit ? <Lightbulb size={15} /> : <LightbulbOff size={15} />}
             {lit ? 'Lights on' : 'Lights off'}
           </button>
-          <div className={styles.stageMeta}>
-            <span className="mono">{num(cct)}K</span>
-            <span>{cctLabel(cct)}</span>
-            {finish !== '—' && <span>· {finish}</span>}
+          {(canCycleCct || canCycleFinish) && (
+            <p className={styles.hint} data-hidden={touched} aria-hidden="true">
+              <MousePointerClick size={13} />
+              <span>
+                <span className={styles.hintPointer}>Click</span>
+                <span className={styles.hintTouch}>Tap</span>{' '}
+                {canCycleCct && canCycleFinish
+                  ? 'the light or the fixture to change it'
+                  : canCycleCct
+                    ? 'the light to change temperature'
+                    : 'the fixture to change finish'}
+              </span>
+            </p>
+          )}
+          <div className={styles.stageControls}>
+            <ArtControls
+              cctOptions={p.cctOptions}
+              cct={cct}
+              onCct={(k) => choose({ cct: k })}
+              finishes={p.finishes}
+              finish={finish}
+              onFinish={(f) => choose({ finish: f })}
+            />
           </div>
         </section>
 
@@ -167,7 +221,7 @@ export function ProductPage() {
                   role="radio"
                   aria-checked={k === cct}
                   className={styles.cct}
-                  onClick={() => setCct(k)}
+                  onClick={() => choose({ cct: k })}
                   style={{ ['--c' as string]: cctToCss(k) }}
                 >
                   <span className={styles.cctDot} />
@@ -191,7 +245,7 @@ export function ProductPage() {
                     role="radio"
                     aria-checked={f === finish}
                     className={styles.finish}
-                    onClick={() => setFinish(f)}
+                    onClick={() => choose({ finish: f })}
                   >
                     <span className={styles.finishDot} style={{ background: finishSwatch(f) }} />
                     {f}

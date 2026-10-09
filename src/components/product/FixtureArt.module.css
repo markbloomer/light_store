@@ -5,7 +5,22 @@
 }
 
 .stop {
-  transition: stop-color var(--dur-slow) var(--ease-out);
+  transition: stop-color 260ms var(--ease-out);
+}
+
+.lightHit,
+.bodyHit {
+  cursor: pointer;
+  transition: filter var(--dur) var(--ease-out);
+}
+.lightHit:hover {
+  filter: brightness(1.25);
+}
+.bodyHit:hover {
+  filter: brightness(1.18) drop-shadow(0 0 6px rgba(255, 255, 255, 0.22));
+}
+:global([data-theme='light']) .bodyHit:hover {
+  filter: brightness(1.06) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.18));
 }
 
 .lightLayer {
@@ -18,6 +33,9 @@
 :global([data-theme='light']) .lightLayer {
   mix-blend-mode: multiply;
   filter: saturate(1.9);
+}
+:global([data-theme='light']) .lightHit:hover {
+  filter: saturate(2.6);
 }
 
 @keyframes breathe {

@@ -10,6 +10,10 @@ type Props = {
   intensity?: number;
   finish?: string;
   className?: string;
+  /** Makes the light layers clickable (pointer only; pair with accessible controls). */
+  onLightClick?: () => void;
+  /** Makes the fixture body clickable (pointer only; pair with accessible controls). */
+  onBodyClick?: () => void;
 };
 
 type Ids = { glow: string; beam: string; pool: string; body: string; emit: string };
@@ -18,7 +22,15 @@ type Ids = { glow: string; beam: string; pool: string; body: string; emit: strin
  * Vector illustrations for each fixture family. Every drawing shares the same
  * three light layers (source glow, beam, floor pool) tinted by colour temperature.
  */
-export function FixtureArt({ kind, cct = 3000, intensity = 1, finish, className }: Props) {
+export function FixtureArt({
+  kind,
+  cct = 3000,
+  intensity = 1,
+  finish,
+  className,
+  onLightClick,
+  onBodyClick,
+}: Props) {
   const uid = useId().replace(/:/g, '');
   const metal = finishStops(finish);
   const light = (a: number) => cctToCss(cct, Math.min(1, a * intensity));
@@ -28,28 +40,37 @@ export function FixtureArt({ kind, cct = 3000, intensity = 1, finish, className 
     <svg viewBox="0 0 200 200" className={`${styles.art} ${className ?? ''}`} aria-hidden="true">
       <defs>
         <radialGradient id={ids.glow}>
-          <stop offset="0%" stopColor={light(1)} />
-          <stop offset="35%" stopColor={light(0.45)} />
-          <stop offset="100%" stopColor={light(0)} />
+          <Stop offset="0%" color={light(1)} />
+          <Stop offset="35%" color={light(0.45)} />
+          <Stop offset="100%" color={light(0)} />
         </radialGradient>
         <linearGradient id={ids.beam} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={light(0.55)} />
-          <stop offset="100%" stopColor={light(0)} />
+          <Stop offset="0%" color={light(0.55)} />
+          <Stop offset="100%" color={light(0)} />
         </linearGradient>
         <radialGradient id={ids.pool}>
-          <stop offset="0%" stopColor={light(0.5)} />
-          <stop offset="100%" stopColor={light(0)} />
+          <Stop offset="0%" color={light(0.5)} />
+          <Stop offset="100%" color={light(0)} />
         </radialGradient>
         <linearGradient id={ids.body} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" className={styles.stop} style={{ stopColor: metal[0] }} />
-          <stop offset="45%" className={styles.stop} style={{ stopColor: metal[1] }} />
-          <stop offset="100%" className={styles.stop} style={{ stopColor: metal[2] }} />
+          <Stop offset="0%" color={metal[0]} />
+          <Stop offset="45%" color={metal[1]} />
+          <Stop offset="100%" color={metal[2]} />
         </linearGradient>
       </defs>
-      <g className={styles.lightLayer}>{DRAW[kind](ids, 'light')}</g>
-      <g>{DRAW[kind](ids, 'body')}</g>
+      <g className={`${styles.lightLayer} ${onLightClick ? styles.lightHit : ''}`} onClick={onLightClick}>
+        {DRAW[kind](ids, 'light')}
+      </g>
+      <g className={onBodyClick ? styles.bodyHit : undefined} onClick={onBodyClick}>
+        {DRAW[kind](ids, 'body')}
+      </g>
     </svg>
   );
+}
+
+/** Stop colour lives in `style` so changes to temperature and finish animate. */
+function Stop({ offset, color }: { offset: string; color: string }) {
+  return <stop offset={offset} className={styles.stop} style={{ stopColor: color }} />;
 }
 
 type Layer = 'light' | 'body';
