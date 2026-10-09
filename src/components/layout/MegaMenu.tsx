@@ -13,7 +13,9 @@ export function MegaMenu() {
   const timer = useRef<number>();
   const { pathname, search } = useLocation();
 
-  useEffect(() => setOpen(false), [pathname, search]);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname, search]);
 
   const show = () => {
     window.clearTimeout(timer.current);

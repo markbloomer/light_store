@@ -10,7 +10,9 @@ import { ShopPage } from './pages/ShopPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => window.scrollTo({ top: 0 }), [pathname]);
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [pathname]);
   return null;
 }
 

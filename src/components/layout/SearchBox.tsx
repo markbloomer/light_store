@@ -28,7 +28,9 @@ export function SearchBox() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  useEffect(() => setActive(0), [q]);
+  useEffect(() => {
+    setActive(0);
+  }, [q]);
 
   const go = (path: string) => {
     navigate(path);
