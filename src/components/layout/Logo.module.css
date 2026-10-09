@@ -1,0 +1,41 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, var(--accent), transparent 55%, var(--accent));
+  display: grid;
+  place-items: center;
+  animation: spin 14s linear infinite;
+}
+.core {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px 3px var(--glow), 0 0 0 5px var(--bg);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.03em;
+}
+.amp {
+  color: var(--accent);
+  margin: 0 1px;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,103 @@
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --container: 1360px;
+  --header-h: 72px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 140ms;
+  --dur: 240ms;
+  --dur-slow: 480ms;
+
+  --amber: #ffb547;
+  --amber-strong: #ff9a1f;
+  --cyan: #5ee6ff;
+  --teal: #2dd4bf;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #08090c;
+  --bg-elev: #0e1015;
+  --surface: #12141a;
+  --surface-2: #181b23;
+  --surface-3: #20242e;
+  --glass: rgba(18, 20, 26, 0.66);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #f3f1ec;
+  --text-2: #a9adb8;
+  --text-3: #6d7280;
+  --accent: var(--amber);
+  --accent-ink: #1a1206;
+  --accent-soft: rgba(255, 181, 71, 0.12);
+  --glow: rgba(255, 181, 71, 0.35);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 30px 60px -20px rgba(0, 0, 0, 0.75);
+  --grain-opacity: 0.05;
+  --art-stroke: #3a3f4b;
+  --art-fill: #1c1f27;
+  --art-metal: #5b6170;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f6f4ef;
+  --bg-elev: #fbfaf7;
+  --surface: #ffffff;
+  --surface-2: #f3f1ec;
+  --surface-3: #e9e6df;
+  --glass: rgba(255, 255, 255, 0.72);
+  --border: rgba(20, 18, 14, 0.08);
+  --border-strong: rgba(20, 18, 14, 0.16);
+  --text: #15130f;
+  --text-2: #5a5750;
+  --text-3: #8f8b82;
+  --accent: #e8850c;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(232, 133, 12, 0.1);
+  --glow: rgba(255, 166, 43, 0.4);
+  --shadow-sm: 0 1px 2px rgba(30, 24, 10, 0.06);
+  --shadow-md: 0 10px 28px -10px rgba(30, 24, 10, 0.18);
+  --shadow-lg: 0 30px 60px -24px rgba(30, 24, 10, 0.28);
+  --grain-opacity: 0.035;
+  --art-stroke: #c9c4b8;
+  --art-fill: #ece8df;
+  --art-metal: #8d877b;
+}
+
+/* Vendor mode retints the accent so the operator always knows which view they're in. */
+[data-vendor='true'] {
+  --accent: var(--teal);
+  --accent-ink: #04201c;
+  --accent-soft: rgba(45, 212, 191, 0.12);
+}
+[data-theme='light'][data-vendor='true'] {
+  --accent: #0d9488;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(13, 148, 136, 0.1);
+}

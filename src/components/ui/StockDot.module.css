@@ -1,0 +1,50 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.high .dot,
+.ok .dot {
+  color: var(--success);
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+}
+.high .dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--success);
+  animation: ping 2.2s var(--ease-out) infinite;
+}
+.low .dot {
+  color: var(--warning);
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.18);
+}
+.out .dot {
+  color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18);
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}

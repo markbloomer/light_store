@@ -1,0 +1,126 @@
+.bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 40;
+  background:
+    linear-gradient(90deg, var(--accent-soft), transparent 40%),
+    var(--glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  animation: slide var(--dur-slow) var(--ease-out);
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.row {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.scope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 4px 0 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-2);
+}
+.scope select {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;
+  padding: 0 30px 0 2px;
+  height: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+.scope select option,
+.scope select optgroup {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.kpis {
+  display: flex;
+  gap: var(--space-5);
+  margin: 0 0 0 auto;
+}
+.kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.kpi dt {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.kpi dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.kpi[data-tone='warn'] dd {
+  color: var(--warning);
+}
+
+@media (max-width: 900px) {
+  .kpis {
+    width: 100%;
+    margin: 0;
+    justify-content: space-between;
+  }
+  .kpi {
+    align-items: flex-start;
+  }
+}

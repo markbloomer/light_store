@@ -1,0 +1,27 @@
+.art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.lightLayer {
+  mix-blend-mode: screen;
+  transform-origin: 50% 30%;
+  animation: breathe 6s ease-in-out infinite;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+
+:global([data-theme='light']) .lightLayer {
+  mix-blend-mode: multiply;
+  filter: saturate(1.9);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,128 @@
+.root {
+  position: static;
+}
+
+.trigger {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: color var(--dur-fast), background-color var(--dur-fast);
+}
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  color: var(--text);
+  background: var(--surface-2);
+}
+.chev {
+  transition: transform var(--dur) var(--ease-out);
+}
+.trigger[aria-expanded='true'] .chev {
+  transform: rotate(180deg);
+}
+
+.panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding-top: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out), visibility var(--dur);
+}
+.panel[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.grid {
+  max-width: calc(var(--container) - 48px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 280px;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+.group ul {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-fast);
+}
+.item:hover {
+  background: var(--surface-2);
+}
+
+.thumb {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.name {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+.blurb {
+  display: block;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.promo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 100% 0%, var(--accent-soft), transparent 60%),
+    radial-gradient(60% 60% at 80% 10%, var(--glow), transparent 70%),
+    var(--surface-2);
+  border: 1px solid var(--border);
+}
+.promo strong {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+.promo span:not(:global(.eyebrow)) {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.promoCta {
+  margin-top: auto;
+  color: var(--accent) !important;
+  font-weight: 600;
+}

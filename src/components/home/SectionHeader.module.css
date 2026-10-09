@@ -1,0 +1,26 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-4);
+  margin: var(--space-9) 0 var(--space-5);
+}
+.head h2 {
+  margin-top: 8px;
+  font-size: clamp(28px, 3.2vw, 40px);
+  letter-spacing: -0.035em;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  transition: color var(--dur-fast), gap var(--dur) var(--ease-out);
+}
+.action:hover {
+  color: var(--accent);
+  gap: 10px;
+}

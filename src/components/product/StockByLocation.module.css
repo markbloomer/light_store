@@ -1,0 +1,116 @@
+.root {
+  --cols: 1fr auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+  font-size: 13.5px;
+}
+.root[data-detailed='true'] {
+  --cols: 1.3fr 80px 110px 1fr;
+}
+
+.head,
+.row {
+  display: grid;
+  grid-template-columns: var(--cols);
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+}
+
+.head {
+  height: 38px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+}
+
+.prov {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px var(--space-4) 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.prov :global(.mono) {
+  font-weight: 400;
+  color: var(--text-3);
+  text-transform: none;
+}
+
+.group + .group {
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  min-height: 42px;
+  transition: opacity var(--dur), background-color var(--dur-fast);
+}
+.row:hover {
+  background: var(--surface-2);
+}
+.row[data-dim='true'] {
+  opacity: 0.38;
+}
+
+.city {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 500;
+}
+.city small {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.num {
+  text-align: right;
+  justify-self: end;
+}
+.muted {
+  color: var(--text-3);
+}
+
+.barCell {
+  height: 6px;
+  border-radius: 6px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.bar {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: var(--accent);
+  transition: width var(--dur-slow) var(--ease-out);
+}
+.bar[data-level='low'] {
+  background: var(--warning);
+}
+.bar[data-level='out'] {
+  background: transparent;
+}
+
+.po {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px var(--space-4);
+  border-top: 1px solid var(--border);
+  background: var(--accent-soft);
+  font-size: 13px;
+  color: var(--text-2);
+}
+.po strong {
+  color: var(--accent);
+}
