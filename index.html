@@ -15,9 +15,7 @@
     <script>
       (function () {
         try {
-          var t = localStorage.getItem('lumen.theme');
-          if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-          document.documentElement.dataset.theme = t;
+          document.documentElement.dataset.theme = localStorage.getItem('lumen.theme') || 'dark';
         } catch (e) {}
       })();
     </script>
