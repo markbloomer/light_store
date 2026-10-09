@@ -15,6 +15,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ArtControls } from '../components/product/ArtControls';
 import { ProductCard } from '../components/product/ProductCard';
 import { FixtureArt } from '../components/product/FixtureArt';
+import { ModelViewer } from '../components/product/ModelViewer';
 import { StockByLocation } from '../components/product/StockByLocation';
 import { TagBadges } from '../components/product/TagBadges';
 import { Button, ButtonLink } from '../components/ui/Button';
@@ -108,17 +109,32 @@ export function ProductPage() {
           data-lit={lit}
           style={{ ['--pl' as string]: cctToCss(cct, 0.55), ['--pl-soft' as string]: cctToCss(cct, 0.16) }}
         >
-          <div className={styles.stageGlow} />
-          <div className={styles.stageArt}>
-            <FixtureArt
-              kind={p.fixture}
+          {p.model ? (
+            <ModelViewer
+              className={styles.stageModel}
+              src={p.model}
               cct={cct}
               finish={finish}
-              intensity={lit ? 1.25 : 0}
+              lit={lit}
+              interactive
               onLightClick={canCycleCct || !lit ? onLightClick : undefined}
               onBodyClick={canCycleFinish ? onBodyClick : undefined}
             />
-          </div>
+          ) : (
+            <>
+              <div className={styles.stageGlow} />
+              <div className={styles.stageArt}>
+                <FixtureArt
+                  kind={p.fixture}
+                  cct={cct}
+                  finish={finish}
+                  intensity={lit ? 1.25 : 0}
+                  onLightClick={canCycleCct || !lit ? onLightClick : undefined}
+                  onBodyClick={canCycleFinish ? onBodyClick : undefined}
+                />
+              </div>
+            </>
+          )}
           <div className={styles.stageBadges}>
             <TagBadges tags={p.tags} max={3} />
           </div>
@@ -130,13 +146,23 @@ export function ProductPage() {
             <p className={styles.hint} data-hidden={touched} aria-hidden="true">
               <MousePointerClick size={13} />
               <span>
-                <span className={styles.hintPointer}>Click</span>
-                <span className={styles.hintTouch}>Tap</span>{' '}
-                {canCycleCct && canCycleFinish
-                  ? 'the light or the fixture to change it'
-                  : canCycleCct
-                    ? 'the light to change temperature'
-                    : 'the fixture to change finish'}
+                {p.model ? (
+                  <>
+                    Drag to rotate, or{' '}
+                    <span className={styles.hintPointer}>click</span>
+                    <span className={styles.hintTouch}>tap</span> the light and the housing to change it
+                  </>
+                ) : (
+                  <>
+                    <span className={styles.hintPointer}>Click</span>
+                    <span className={styles.hintTouch}>Tap</span>{' '}
+                    {canCycleCct && canCycleFinish
+                      ? 'the light or the fixture to change it'
+                      : canCycleCct
+                        ? 'the light to change temperature'
+                        : 'the fixture to change finish'}
+                  </>
+                )}
               </span>
             </p>
           )}

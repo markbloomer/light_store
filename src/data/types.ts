@@ -76,6 +76,8 @@ export interface Product {
   reviews: number;
   tags: ProductTag[];
   description: string;
+  /** glTF path. Listings without one keep the drawn fixture art. */
+  model?: string;
   addedDaysAgo: number;
   stock: Record<string, number>;
   incoming?: IncomingPO;

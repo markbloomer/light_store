@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FREE_SHIPPING_AT, useCart } from '../../context/CartContext';
 import { kelvin, money } from '../../lib/format';
 import { FixtureArt } from '../product/FixtureArt';
+import { ModelViewer } from '../product/ModelViewer';
 import { Button, ButtonLink } from '../ui/Button';
 import styles from './CartDrawer.module.css';
 
@@ -70,7 +71,11 @@ export function CartDrawer() {
             {lines.map((l) => (
               <li key={l.key} className={styles.line}>
                 <div className={styles.thumb}>
-                  <FixtureArt kind={l.product.fixture} cct={l.cct} finish={l.finish} />
+                  {l.product.model ? (
+                    <ModelViewer src={l.product.model} cct={l.cct} finish={l.finish} lit />
+                  ) : (
+                    <FixtureArt kind={l.product.fixture} cct={l.cct} finish={l.finish} />
+                  )}
                 </div>
                 <div className={styles.info}>
                   <Link to={`/product/${l.product.id}`} onClick={() => setOpen(false)} className={styles.name}>

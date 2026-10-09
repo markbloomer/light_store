@@ -19,6 +19,9 @@ type Seed = {
   finishes?: string[];
   tags?: ProductTag[];
   desc: string;
+  model?: string;
+  lifespanHrs?: number;
+  warrantyYrs?: number;
 };
 
 const SEEDS: Seed[] = [
@@ -46,6 +49,25 @@ const SEEDS: Seed[] = [
   { sku: 'LM-LP-ST64', name: 'ST64 Amber Filament, 4-Pack', brand: 'Nord Atelier', category: 'lamps', price: 36, watts: 6, lumens: 450, cct: [2200], cri: 90, certs: ['cULus'], tags: ['bestseller'], finishes: ['Amber'], desc: 'Vintage teardrop silhouette with spiral filament. E26 base, dimmable.' },
   { sku: 'LM-LP-T8', name: 'T8 Type A+B Tube, 25-Pack', brand: 'Voltaire', category: 'lamps', price: 112, compareAt: 139, watts: 15, lumens: 2200, cct: [3500, 4000, 5000], cri: 82, voltage: '120–277V', certs: ['DLC', 'cULus'], tags: ['sale', 'rebate'], finishes: ['Frosted'], desc: 'Hybrid tube works with or without the existing ballast — the easiest fluorescent retrofit.' },
   { sku: 'LM-LP-A19', name: 'A19 Smart Bulb, 2-Pack', brand: 'Voltaire', category: 'lamps', price: 29, watts: 9, lumens: 800, cct: [2700, 3000, 4000, 5000, 6500], cri: 90, certs: ['cETL', 'ENERGY STAR'], tags: ['new'], finishes: ['White'], desc: 'Tunable white and full RGB over Matter and Wi-Fi. No hub required.' },
+  {
+    sku: 'HCY0823L',
+    name: 'HCY Round High Bay',
+    brand: 'Day-Brite / CFI',
+    category: 'high-bays',
+    price: 329,
+    watts: 160,
+    lumens: 23000,
+    cct: [3500, 4000, 5000],
+    cri: 80,
+    voltage: '120–347V',
+    certs: ['DLC', 'cULus', 'IP65'],
+    finishes: ['Black', 'White'],
+    tags: ['new'],
+    lifespanHrs: 50000,
+    warrantyYrs: 5,
+    model: '/models/HCY0823L.glb',
+    desc: 'Sealed round high bay. Field-selectable 8,000 / 14,000 / 23,000 lm and 3500 / 4000 / 5000K, with a clear polycarbonate lens, stainless hook, and 0–10V dimming. IP65, NEMA 4X and IK08.',
+  },
 ];
 
 /** Deterministic PRNG so stock levels are stable across reloads. */
@@ -97,8 +119,9 @@ function build(seed: Seed, index: number): Product {
     dimmable: seed.dimmable ?? true,
     voltage: seed.voltage ?? '120V',
     certifications: seed.certs ?? ['cULus'],
-    lifespanHrs: cat.application === 'Industrial' ? 100000 : 50000,
-    warrantyYrs: cat.application === 'Residential' ? 5 : 10,
+    lifespanHrs: seed.lifespanHrs ?? (cat.application === 'Industrial' ? 100000 : 50000),
+    warrantyYrs: seed.warrantyYrs ?? (cat.application === 'Residential' ? 5 : 10),
+    model: seed.model,
     finishes: seed.finishes ?? ['White'],
     rating: Math.round((4.2 + rnd() * 0.8) * 10) / 10,
     reviews: Math.round(12 + rnd() * 480),

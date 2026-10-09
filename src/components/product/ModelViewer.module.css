@@ -1,0 +1,25 @@
+.root {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.root[data-ready='true'] {
+  opacity: 1;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.interactive {
+  touch-action: none;
+}
+.interactive .canvas {
+  cursor: grab;
+}
+.interactive .canvas:active {
+  cursor: grabbing;
+}

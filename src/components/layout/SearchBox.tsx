@@ -6,6 +6,7 @@ import { PRODUCTS } from '../../data/products';
 import { money } from '../../lib/format';
 import { searchProducts } from '../../lib/search';
 import { FixtureArt } from '../product/FixtureArt';
+import { ModelViewer } from '../product/ModelViewer';
 import styles from './SearchBox.module.css';
 
 export function SearchBox() {
@@ -124,7 +125,11 @@ export function SearchBox() {
                 onClick={() => go(`/product/${p.id}`)}
               >
                 <span className={styles.thumb}>
-                  <FixtureArt kind={p.fixture} cct={p.cctOptions[0]} />
+                  {p.model ? (
+                    <ModelViewer src={p.model} cct={p.cctOptions[0]} finish={p.finishes[0]} lit />
+                  ) : (
+                    <FixtureArt kind={p.fixture} cct={p.cctOptions[0]} />
+                  )}
                 </span>
                 <span className={styles.meta}>
                   <span className={styles.name}>{p.name}</span>

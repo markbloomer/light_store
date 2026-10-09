@@ -8,6 +8,7 @@ import type { Product } from '../../data/types';
 import { money, num, pct } from '../../lib/format';
 import { margin, scopeLocationIds, stockIn, stockLevel } from '../../lib/inventory';
 import { FixtureArt } from '../product/FixtureArt';
+import { ModelViewer } from '../product/ModelViewer';
 import { StockDot } from '../ui/StockDot';
 import styles from './VendorTable.module.css';
 
@@ -47,7 +48,11 @@ export function VendorTable({ products }: { products: Product[] }) {
                 <td>
                   <Link to={`/product/${p.id}`} className={styles.prod}>
                     <span className={styles.thumb}>
-                      <FixtureArt kind={p.fixture} cct={p.cctOptions[0]} />
+                      {p.model ? (
+                        <ModelViewer src={p.model} cct={p.cctOptions[0]} finish={p.finishes[0]} lit />
+                      ) : (
+                        <FixtureArt kind={p.fixture} cct={p.cctOptions[0]} />
+                      )}
                     </span>
                     <span>
                       <span className={styles.name}>{p.name}</span>

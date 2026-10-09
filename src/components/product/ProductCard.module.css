@@ -52,6 +52,10 @@
 .card:hover .art {
   transform: scale(1.04);
 }
+.model {
+  position: absolute;
+  inset: 0;
+}
 
 .badges {
   position: absolute;

@@ -12,6 +12,7 @@ import { margin, scopeLabel, scopeLocationIds, stockIn, stockLevel } from '../..
 import { Badge } from '../ui/Badge';
 import { StockDot } from '../ui/StockDot';
 import { FixtureArt } from './FixtureArt';
+import { ModelViewer } from './ModelViewer';
 import { TagBadges } from './TagBadges';
 import styles from './ProductCard.module.css';
 
@@ -46,8 +47,12 @@ export function ProductCard({ product: p, index = 0 }: { product: Product; index
     >
       <div className={styles.mediaWrap}>
         <Link to={href} className={styles.media} aria-label={p.name}>
-          <div className={styles.art}>
-            <FixtureArt kind={p.fixture} cct={cct} finish={finish} intensity={hover ? 1.15 : 0.9} />
+          <div className={p.model ? styles.model : styles.art}>
+            {p.model ? (
+              <ModelViewer src={p.model} cct={cct} finish={finish} lit />
+            ) : (
+              <FixtureArt kind={p.fixture} cct={cct} finish={finish} intensity={hover ? 1.15 : 0.9} />
+            )}
           </div>
           <div className={styles.badges}>
             <TagBadges tags={p.tags} />
