@@ -38,6 +38,12 @@
   --danger: #f87171;
 }
 
+@media (max-width: 760px) {
+  :root {
+    --header-h: 60px;
+  }
+}
+
 [data-theme='dark'] {
   color-scheme: dark;
   --bg: #08090c;

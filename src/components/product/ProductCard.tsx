@@ -43,7 +43,7 @@ export function ProductCard({ product: p, index = 0 }: { product: Product; index
       <div className={styles.mediaWrap}>
         <Link to={`/product/${p.id}`} className={styles.media} aria-label={p.name}>
           <div className={styles.art}>
-            <FixtureArt kind={p.fixture} cct={cct} intensity={hover ? 1.15 : 0.9} />
+            <FixtureArt kind={p.fixture} cct={cct} finish={p.finishes[0]} intensity={hover ? 1.15 : 0.9} />
           </div>
           <div className={styles.badges}>
             <TagBadges tags={p.tags} />

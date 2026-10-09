@@ -124,3 +124,30 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 760px) {
+  .bar {
+    position: relative;
+    top: 0;
+  }
+  .row {
+    gap: var(--space-3);
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+  .scope {
+    flex: 1;
+    min-width: 0;
+  }
+  .scope select {
+    flex: 1;
+    min-width: 0;
+    font-size: 16px;
+    text-overflow: ellipsis;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px var(--space-4);
+  }
+}

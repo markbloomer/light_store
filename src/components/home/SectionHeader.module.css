@@ -24,3 +24,13 @@
   color: var(--accent);
   gap: 10px;
 }
+
+@media (max-width: 640px) {
+  .head {
+    margin: var(--space-7) 0 var(--space-4);
+  }
+  .action {
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}

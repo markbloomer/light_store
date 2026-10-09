@@ -70,7 +70,7 @@ export function CartDrawer() {
             {lines.map((l) => (
               <li key={l.key} className={styles.line}>
                 <div className={styles.thumb}>
-                  <FixtureArt kind={l.product.fixture} cct={l.cct} />
+                  <FixtureArt kind={l.product.fixture} cct={l.cct} finish={l.finish} />
                 </div>
                 <div className={styles.info}>
                   <Link to={`/product/${l.product.id}`} onClick={() => setOpen(false)} className={styles.name}>

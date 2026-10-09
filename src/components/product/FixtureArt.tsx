@@ -1,12 +1,14 @@
 import { useId, type ReactNode } from 'react';
 import type { FixtureKind } from '../../data/types';
 import { cctToCss } from '../../lib/color';
+import { finishStops } from '../../lib/finish';
 import styles from './FixtureArt.module.css';
 
 type Props = {
   kind: FixtureKind;
   cct?: number;
   intensity?: number;
+  finish?: string;
   className?: string;
 };
 
@@ -16,8 +18,9 @@ type Ids = { glow: string; beam: string; pool: string; body: string; emit: strin
  * Vector illustrations for each fixture family. Every drawing shares the same
  * three light layers (source glow, beam, floor pool) tinted by colour temperature.
  */
-export function FixtureArt({ kind, cct = 3000, intensity = 1, className }: Props) {
+export function FixtureArt({ kind, cct = 3000, intensity = 1, finish, className }: Props) {
   const uid = useId().replace(/:/g, '');
+  const metal = finishStops(finish);
   const light = (a: number) => cctToCss(cct, Math.min(1, a * intensity));
   const ids: Ids = { glow: `g${uid}`, beam: `b${uid}`, pool: `p${uid}`, body: `m${uid}`, emit: cctToCss(cct) };
 
@@ -38,8 +41,9 @@ export function FixtureArt({ kind, cct = 3000, intensity = 1, className }: Props
           <stop offset="100%" stopColor={light(0)} />
         </radialGradient>
         <linearGradient id={ids.body} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="var(--art-metal)" />
-          <stop offset="100%" stopColor="var(--art-fill)" />
+          <stop offset="0%" className={styles.stop} style={{ stopColor: metal[0] }} />
+          <stop offset="45%" className={styles.stop} style={{ stopColor: metal[1] }} />
+          <stop offset="100%" className={styles.stop} style={{ stopColor: metal[2] }} />
         </linearGradient>
       </defs>
       <g className={styles.lightLayer}>{DRAW[kind](ids, 'light')}</g>

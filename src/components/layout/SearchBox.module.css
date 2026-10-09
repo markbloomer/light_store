@@ -127,8 +127,67 @@
   text-align: left;
 }
 
+.mobileTrigger,
+.close {
+  display: none;
+}
+
+/* Hide the native clear button; the custom close control replaces it on mobile. */
+.field input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
 @media (max-width: 760px) {
-  .kbd {
+  .root {
+    flex: none;
+    max-width: none;
+  }
+  .kbd,
+  .field {
     display: none;
+  }
+  .mobileTrigger {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    color: var(--text-2);
+  }
+  .root[data-mobile-open='true'] {
+    position: absolute;
+    z-index: 5;
+    left: var(--space-3);
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .root[data-mobile-open='true'] .mobileTrigger {
+    display: none;
+  }
+  .root[data-mobile-open='true'] .field {
+    display: flex;
+    height: 44px;
+    background: var(--surface);
+    animation: fade-up var(--dur) var(--ease-out);
+  }
+  /* 16px stops iOS Safari from zooming the page on focus. */
+  .field input {
+    font-size: 16px;
+  }
+  .close {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--text-3);
+  }
+  .panel {
+    max-height: calc(100dvh - var(--header-h) - 24px);
+    overflow: auto;
+  }
+  .result {
+    min-height: 56px;
   }
 }

@@ -66,7 +66,10 @@
 @media (max-width: 900px) {
   .panel {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-7);
     padding: var(--space-6) var(--space-5);
+    border-radius: var(--radius-lg);
   }
   .list {
     grid-template-columns: 1fr;

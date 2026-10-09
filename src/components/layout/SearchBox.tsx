@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORY_BY_ID } from '../../data/categories';
@@ -12,6 +12,7 @@ export function SearchBox() {
   const [q, setQ] = useState('');
   const [focused, setFocused] = useState(false);
   const [active, setActive] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ export function SearchBox() {
   const go = (path: string) => {
     navigate(path);
     setQ('');
+    setMobileOpen(false);
     inputRef.current?.blur();
   };
 
@@ -56,16 +58,36 @@ export function SearchBox() {
 
   const showPanel = focused && q.trim().length > 0;
 
+  const openMobile = () => {
+    setMobileOpen(true);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  };
+
+  const closeMobile = () => {
+    setMobileOpen(false);
+    setQ('');
+  };
+
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-mobile-open={mobileOpen}>
+      <button type="button" className={styles.mobileTrigger} onClick={openMobile} aria-label="Search products">
+        <Search size={18} />
+      </button>
       <label className={styles.field} data-focused={focused}>
         <Search size={16} className={styles.icon} />
         <input
           ref={inputRef}
+          type="search"
+          enterKeyHint="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 120)}
+          onBlur={() =>
+            setTimeout(() => {
+              setFocused(false);
+              if (!inputRef.current?.value) setMobileOpen(false);
+            }, 120)
+          }
           onKeyDown={onKeyDown}
           placeholder="Search fixtures, SKUs, brands…"
           aria-label="Search products"
@@ -74,6 +96,15 @@ export function SearchBox() {
           aria-controls="search-results"
         />
         <kbd className={styles.kbd}>Ctrl K</kbd>
+        <button
+          type="button"
+          className={styles.close}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={closeMobile}
+          aria-label="Close search"
+        >
+          <X size={16} />
+        </button>
       </label>
 
       {showPanel && (

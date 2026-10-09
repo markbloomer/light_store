@@ -235,3 +235,52 @@
     gap: var(--space-5);
   }
 }
+
+@media (max-width: 640px) {
+  .inner {
+    gap: var(--space-5);
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+  .kicker {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  .since {
+    display: none;
+  }
+  .title {
+    margin-top: var(--space-4);
+    font-size: clamp(40px, 12vw, 56px);
+  }
+  .lede {
+    font-size: 15.5px;
+    margin-top: var(--space-4);
+  }
+  .ctas {
+    margin-top: var(--space-5);
+  }
+  .ctas > * {
+    flex: 1 1 auto;
+  }
+  .stats {
+    margin-top: var(--space-6);
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .stats dt {
+    font-size: 11px;
+  }
+  .stats dd {
+    font-size: 22px;
+  }
+  .stage {
+    max-width: 360px;
+  }
+  .dial {
+    padding: var(--space-3) var(--space-4) var(--space-2);
+  }
+  .kelvin {
+    font-size: 16px;
+  }
+}

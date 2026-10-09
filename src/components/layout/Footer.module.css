@@ -79,8 +79,25 @@
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-6) var(--space-5);
+    padding-top: var(--space-7);
+  }
+  .brand {
+    grid-column: 1 / -1;
   }
   .legal {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    margin-top: var(--space-8);
+  }
+  .news input {
+    font-size: 16px;
+  }
+  .branches {
+    grid-template-columns: 1fr;
   }
 }

@@ -12,6 +12,7 @@ import { useVendor } from '../context/VendorContext';
 import { CATEGORY_BY_ID } from '../data/categories';
 import { PRODUCT_BY_ID, PRODUCTS } from '../data/products';
 import { cctLabel, cctToCss } from '../lib/color';
+import { finishSwatch } from '../lib/finish';
 import { efficacy, money, num, pct } from '../lib/format';
 import { margin, scopeLabel, stockIn, stockLevel, totalStock } from '../lib/inventory';
 import styles from './ProductPage.module.css';
@@ -81,7 +82,7 @@ export function ProductPage() {
         >
           <div className={styles.stageGlow} />
           <div className={styles.stageArt}>
-            <FixtureArt kind={p.fixture} cct={cct} intensity={lit ? 1.25 : 0} />
+            <FixtureArt kind={p.fixture} cct={cct} finish={finish} intensity={lit ? 1.25 : 0} />
           </div>
           <div className={styles.stageBadges}>
             <TagBadges tags={p.tags} max={3} />
@@ -93,6 +94,7 @@ export function ProductPage() {
           <div className={styles.stageMeta}>
             <span className="mono">{num(cct)}K</span>
             <span>{cctLabel(cct)}</span>
+            {finish !== '—' && <span>· {finish}</span>}
           </div>
         </section>
 
@@ -191,6 +193,7 @@ export function ProductPage() {
                     className={styles.finish}
                     onClick={() => setFinish(f)}
                   >
+                    <span className={styles.finishDot} style={{ background: finishSwatch(f) }} />
                     {f}
                   </button>
                 ))}
@@ -209,7 +212,8 @@ export function ProductPage() {
               </button>
             </div>
             <Button variant="primary" size="lg" className={styles.addBtn} onClick={() => add(p, { cct, finish, qty })}>
-              {vendor ? 'Add to order' : 'Add to cart'} · {money(p.price * qty)}
+              {vendor ? 'Add to order' : 'Add to cart'}
+              <span className={styles.btnPrice}>· {money(p.price * qty)}</span>
             </Button>
           </div>
 

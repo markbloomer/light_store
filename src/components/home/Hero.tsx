@@ -44,7 +44,8 @@ export function Hero() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.copy}>
           <span className={`eyebrow ${styles.kicker}`}>
-            <span className={styles.dot} /> Canada's lighting specialists since 1998
+            <span className={styles.dot} /> Canada's lighting specialists
+            <span className={styles.since}>since 1998</span>
           </span>
           <h1 className={styles.title}>
             Light, <em>engineered</em>

@@ -7,6 +7,7 @@ import { useVendor } from '../../context/VendorContext';
 import { Button } from '../ui/Button';
 import { Logo } from './Logo';
 import { MegaMenu } from './MegaMenu';
+import { MobileMenu } from './MobileMenu';
 import { SearchBox } from './SearchBox';
 import styles from './Header.module.css';
 
@@ -42,6 +43,7 @@ export function Header() {
       </div>
       <header className={styles.header}>
         <div className={`container ${styles.row}`}>
+          <MobileMenu />
           <Link to="/" className={styles.brand} aria-label="Lumen & Co. home">
             <Logo />
           </Link>
@@ -71,7 +73,13 @@ export function Header() {
               </span>
             </button>
 
-            <Button variant="ghost" icon onClick={toggle} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
+            <Button
+              variant="ghost"
+              icon
+              onClick={toggle}
+              className={styles.themeBtn}
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
 

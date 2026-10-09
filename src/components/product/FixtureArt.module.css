@@ -4,6 +4,10 @@
   overflow: visible;
 }
 
+.stop {
+  transition: stop-color var(--dur-slow) var(--ease-out);
+}
+
 .lightLayer {
   mix-blend-mode: screen;
   transform-origin: 50% 30%;
