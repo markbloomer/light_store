@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -22,4 +23,91 @@
 }
 .interactive .canvas:active {
   cursor: grabbing;
+}
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dimLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f7c9e;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.views {
+  position: absolute;
+  z-index: 3;
+  right: 10px;
+  top: 48px;
+  bottom: 58px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 46px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: auto;
+  scrollbar-width: none;
+}
+.views::-webkit-scrollbar {
+  display: none;
+}
+
+.sep {
+  flex: none;
+  width: 22px;
+  height: 1px;
+  margin: 2px auto;
+  background: var(--border-strong);
+}
+
+.viewBtn {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  transition: background-color var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast);
+}
+.viewBtn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.viewBtn[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+@media (max-width: 640px) {
+  .views {
+    top: 48px;
+    bottom: 60px;
+    right: 8px;
+    width: 44px;
+    padding: 6px;
+    gap: 4px;
+  }
+  .viewBtn {
+    width: 32px;
+    height: 32px;
+  }
 }
